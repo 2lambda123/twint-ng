@@ -13,6 +13,17 @@ import logging
 import json
 
 def convertToInt(x):
+    """Converts a string to an integer.
+    Parameters:
+        - x (str): String to be converted to an integer.
+    Returns:
+        - int: Integer value of the input string.
+    Processing Logic:
+        - Replaces commas in the string if present.
+        - Tries to convert the string to an integer.
+        - If unsuccessful, tries to convert to a float and multiply by a multiplier from the multDict dictionary.
+        - If still unsuccessful, returns 0."""
+    
     multDict = {
         "k" : 1000,
         "m" : 1000000,
@@ -36,6 +47,8 @@ def convertToInt(x):
     return 0
 
 def runSearch(search):
+  """"""
+  
   params = {
     'vertical': 'default',
     'src': 'unkn',
@@ -74,6 +87,8 @@ def runSearch(search):
 
 
 def getProfile(username):
+  """"""
+  
   headers = { 
     'X-Requested-With': 'XMLHttpRequest'
   }
@@ -122,6 +137,8 @@ def getProfile(username):
   }
  
 def getFollowXXXGenerator(url, username):
+  """"""
+  
   done = False
   session = requests.Session()
   fullUrl = url
@@ -152,16 +169,33 @@ def getFollowXXXGenerator(url, username):
       fullUrl = f'{url}?cursor={cursor}'
 
 def getFollowersGenerator(username):
+  """"""
+  
   return getFollowXXXGenerator(f'https://mobile.twitter.com/{username}/followers', username)
 
 def getFollowingGenerator(username):
+  """"""
+  
   return getFollowXXXGenerator(f'https://mobile.twitter.com/{username}/following', username)
 
 def getFollowers(username):
+  """"""
+  
   for value in getFollowersGenerator(username):
     print(value)
 
 def getFollowing(username):
+  """"Prints the list of users that the given username is following.
+  Parameters:
+      - username (str): The username of the user whose following list is to be retrieved.
+  Returns:
+      - None: This function does not return any value.
+  Processing Logic:
+      - Uses a generator function to retrieve the following list.
+      - Loops through the generator and prints each value.
+      - Does not store the values in memory.
+      - No need to handle exceptions.""""
+  
   for value in getFollowingGenerator(username):
     print(value)
 
