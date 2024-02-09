@@ -87,8 +87,7 @@ def getProfile(username):
 
   soup = BeautifulSoup(response.text, 'html.parser')
   data = soup.find('div', class_='user-actions')
-  urlEl = soup.find('span', 'ProfileHeaderCard-urlText').find('a') 
-  if urlEl:
+  if urlEl := soup.find('span', 'ProfileHeaderCard-urlText').find('a'):
     url = urlEl['title']
   else:
     url = ''
