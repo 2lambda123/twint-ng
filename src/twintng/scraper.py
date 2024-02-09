@@ -70,11 +70,11 @@ def runSearch(search):
       print(tweet.find('a', 'tweet-timestamp')['title'] + ':' + tweet.find('p', 'tweet-text').text)
 
     params['max_position'] = jsonResponse["min_position"]
-    
+
 
 
 def getProfile(username):
-  headers = { 
+  headers = {
     'X-Requested-With': 'XMLHttpRequest'
   }
 
@@ -91,7 +91,7 @@ def getProfile(username):
     url = urlEl['title']
   else:
     url = ''
-  return { 
+  return {
     'id': data['data-user-id'],
     'username': data['data-screen-name'],
     'name': data['data-name'],
@@ -99,7 +99,7 @@ def getProfile(username):
     'bio': soup.find('p', class_='ProfileHeaderCard-bio').text,
     'location': soup.find('span', class_='ProfileHeaderCard-locationText').text.strip(),
     'joined': time.strftime(
-      '%Y-%m-%dT%H:%M:%SZ', 
+      '%Y-%m-%dT%H:%M:%SZ',
       time.strptime(soup.find('span', class_='ProfileHeaderCard-joinDateText')['title'], '%I:%M %p - %d %b %Y')
     ),
     'following': (int)(soup
@@ -120,7 +120,7 @@ def getProfile(username):
     'is_verified': len(soup.find_all('span', 'ProfileHeaderCard-badges')),
     'url': url
   }
- 
+
 def getFollowXXXGenerator(url, username):
   done = False
   session = requests.Session()
@@ -138,7 +138,7 @@ def getFollowXXXGenerator(url, username):
         'username': userblock.find('a', {'name' : True})['name'],
         'name': userblock.find('strong', class_='fullname').text
       }
-              
+
     cursorCode = soup.find_all("div", "w-button-more")
     if len(cursorCode) < 1:
       break
@@ -164,5 +164,3 @@ def getFollowers(username):
 def getFollowing(username):
   for value in getFollowingGenerator(username):
     print(value)
-
-
